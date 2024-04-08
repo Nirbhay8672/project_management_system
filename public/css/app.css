@@ -162,6 +162,13 @@ body {
     color: red;
 }
 
+.centered-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 button {
     border-radius: 8px !important;
 }

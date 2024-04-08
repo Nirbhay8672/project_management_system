@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <sidebar></sidebar>
+        <custom-sidebar />
 
         <div class="main">
             <slot></slot>
@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-import Sidebar from "./components/Sidebar.vue";
+import CustomSidebar from "./components/CustomSidebar.vue";
 </script>
