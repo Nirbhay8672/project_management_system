@@ -1,8 +1,7 @@
 <template>
+    <inertia-head title="Dashboard" />
     <main-page>
-        <h1 class="h3 mb-3">
-            <strong>Welcome</strong> {{ auth.user.username }}
-        </h1>
+        <h5><strong>Welcome</strong> {{ auth.user.username }}</h5>
     </main-page>
 </template>
 

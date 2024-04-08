@@ -157,6 +157,15 @@ body {
     color: black;
 }
 
+.required::after {
+    content: ' *';
+    color: red;
+}
+
+button {
+    border-radius: 8px !important;
+}
+
 hr {
     border: 0;
     border-top: var(--bs-border-width) solid;
