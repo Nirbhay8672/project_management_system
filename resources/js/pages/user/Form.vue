@@ -233,6 +233,13 @@ function handleSubmit() {
                 emits("reload", response.data.user_details);
                 toastAlert({ title: response.data.message });
                 clearFormData();
+            })
+            .catch(function (error) {
+                if (error.response.status === 422) {
+                    formValidation.setServerSideErrors(
+                        error.response.data.errors
+                    );
+                }
             });
     }
 }

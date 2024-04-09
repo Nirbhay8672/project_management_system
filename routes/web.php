@@ -24,4 +24,5 @@ Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
 // projects url
 Route::prefix('projects')->as('projects.')->middleware(['auth'])->group(function () {
     Route::get('/index', [ProjectController::class, 'index'])->name('project-index');
+    Route::post('/datatable', [ProjectController::class, 'datatable'])->name('project-datatable');
 });

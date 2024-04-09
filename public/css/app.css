@@ -162,6 +162,62 @@ body {
     color: red;
 }
 
+.overflow,
+.circle-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle-line {
+    z-index: 9999;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.circle-red,
+.circle-blue {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+    margin: 5px;
+}
+
+.circle-red {
+    background-color: #EA4335;
+    animation: movingUp 0.5s infinite alternate;
+    text-align: center;
+    padding-top: 8px;
+    color: white;
+}
+
+.circle-blue {
+    background-color: #4285f4;
+    animation: movingUp 0.5s 0.2s infinite alternate;
+    text-align: center;
+    padding-top: 8px;
+    color: white;
+}
+
+/* CSS ANIMATION */
+
+@keyframes movingUp {
+    from {
+
+        top: 0px;
+
+    }
+
+    to {
+
+        top: -30px;
+    }
+}
+
 td:first-child,
 th:first-child {
     border-radius: 10px 0 0 10px;
@@ -414,15 +470,10 @@ label {
     display: inline-block
 }
 
-button {
-    border-radius: 0
-}
-
 button:focus:not(:focus-visible) {
     outline: 0
 }
 
-button,
 input,
 optgroup,
 select,
