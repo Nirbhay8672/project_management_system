@@ -4,136 +4,146 @@
             <span>Update Profile</span>
         </template>
 
-        <div class="row">
-            <div class="text-center col-lg-12">
-                <div class="card-img-actions d-inline-block">
-                    <div
-                        style="
-                            position: center;
-                            overflow: hidden;
-                            border-radius: 50%;
-                        "
-                    >
-                        <img
-                            id="profile_image_file"
-                            :src="
-                                fields.profile_path
-                                    ? fields.profile_path
-                                    : '/images/user.png'
+        <form>
+            <div class="row">
+                <div class="text-center col-lg-12">
+                    <div class="card-img-actions d-inline-block">
+                        <div
+                            style="
+                                position: center;
+                                overflow: hidden;
+                                border-radius: 50%;
                             "
-                            class="rounded"
-                            style="width: 120px; height: 120px"
-                        />
+                        >
+                            <img
+                                id="profile_image_file"
+                                :src="
+                                    fields.profile_path
+                                        ? fields.profile_path
+                                        : '/images/user.png'
+                                "
+                                class="rounded"
+                                style="width: 120px; height: 120px"
+                            />
+                        </div>
+                        <button
+                            class="btn btn-primary btn-sm mt-2"
+                            @click="trigger"
+                        >
+                            Change Image
+                        </button>
                     </div>
-                    <button
-                        class="btn btn-primary btn-sm mt-2"
-                        @click="trigger"
+                    <input
+                        type="file"
+                        id="profile_image"
+                        ref="my_profile"
+                        @change="previewFiles"
+                        class="form-control d-none"
+                        accept="image/png, image/jpeg, image/jpg"
+                        :class="{
+                            'is-invalid':
+                                formValidation.hasError('profile_image'),
+                        }"
+                    />
+                    <span
+                        :class="{
+                            'is-invalid':
+                                formValidation.hasError('profile_image'),
+                        }"
+                    ></span>
+                    <div
+                        class="invalid-feedback"
+                        v-if="formValidation.hasError('profile_image')"
                     >
-                        Change Image
-                    </button>
-                </div>
-                <input
-                    type="file"
-                    id="profile_image"
-                    ref="my_profile"
-                    @change="previewFiles"
-                    class="form-control d-none"
-                    accept="image/png, image/jpeg, image/jpg"
-                    :class="{
-                        'is-invalid': formValidation.hasError('profile_image'),
-                    }"
-                />
-                <span
-                    :class="{
-                        'is-invalid': formValidation.hasError('profile_image'),
-                    }"
-                ></span>
-                <div
-                    class="invalid-feedback"
-                    v-if="formValidation.hasError('profile_image')"
-                >
-                    <span>{{
-                        formValidation.getError("profile_image")[0]
-                    }}</span>
+                        <span>{{
+                            formValidation.getError("profile_image")[0]
+                        }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row mt-3">
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.username"
-                    label="Username"
-                    label-class="required"
-                    type="text"
-                    id="username"
-                    field="username"
-                    placeholder="Enter username"
-                    :errors="formValidation.errors"
-                ></Field>
+            <div class="row mt-3">
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.username"
+                        label="Username"
+                        label-class="required"
+                        type="text"
+                        id="username"
+                        field="username"
+                        placeholder="Enter username"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.email"
+                        label="Email"
+                        label-class="required"
+                        type="text"
+                        id="email"
+                        field="email"
+                        placeholder="Enter email"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.first_name"
+                        label="First Name"
+                        label-class="required"
+                        type="text"
+                        id="first_name"
+                        field="first_name"
+                        placeholder="Enter first name"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.last_name"
+                        label="Last Name"
+                        label-class="required"
+                        type="text"
+                        id="last_name"
+                        field="last_name"
+                        placeholder="Enter last name"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        field="password"
+                        placeholder="Enter password"
+                        autocomplete="off"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <Field
+                        v-model="fields.confirm_password"
+                        label="Confirm Password"
+                        type="text"
+                        id="confirm_password"
+                        field="confirm_password"
+                        autocomplete="off"
+                        placeholder="Enter confirm password"
+                        :errors="formValidation.errors"
+                    ></Field>
+                </div>
             </div>
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.email"
-                    label="Email"
-                    label-class="required"
-                    type="text"
-                    id="email"
-                    field="email"
-                    placeholder="Enter email"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.first_name"
-                    label="First Name"
-                    label-class="required"
-                    type="text"
-                    id="first_name"
-                    field="first_name"
-                    placeholder="Enter first name"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.last_name"
-                    label="Last Name"
-                    label-class="required"
-                    type="text"
-                    id="last_name"
-                    field="last_name"
-                    placeholder="Enter last name"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    field="password"
-                    placeholder="Enter password"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-            <div class="col-lg-6 mb-2">
-                <Field
-                    v-model="fields.confirm_password"
-                    label="Confirm Password"
-                    type="text"
-                    id="confirm_password"
-                    field="confirm_password"
-                    placeholder="Enter confirm password"
-                    :errors="formValidation.errors"
-                ></Field>
-            </div>
-        </div>
+        </form>
 
         <template #modal_footer>
-            <button class="btn btn-success btn-sm" @click="handleSubmit">
+            <button
+                class="btn btn-success btn-sm"
+                type="button"
+                @click="handleSubmit"
+            >
                 Update
             </button>
         </template>
