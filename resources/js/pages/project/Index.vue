@@ -13,7 +13,7 @@
                             <span class="ms-2">Re-Sync</span>
                         </button>
                         <button
-                            class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3"
+                            class="btn btn-primary btn-sm ms-sm-3 ms-md-3 ms-lg-3 mt-sm-2 mt-3 mt-md-0 mt-lg-0 mt-sm-0"
                             @click="openForm()"
                         >
                             <i class="fa fa-plus-circle"></i>
