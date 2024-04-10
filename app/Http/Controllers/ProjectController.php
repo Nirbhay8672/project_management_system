@@ -30,7 +30,6 @@ class ProjectController extends Controller
             }
 
             $total = $query->count();
-
             $offset = ($page - 1) * $perPage;
 
             $projects = $query->offset($offset)

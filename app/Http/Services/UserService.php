@@ -41,7 +41,7 @@ class UserService
         }
     }
 
-    private function storeProfileImage(UploadedFile $file, User $user): void
+    public function storeProfileImage(UploadedFile $file, User $user): void
     {
         $user->loadMissing('profileImage');
 

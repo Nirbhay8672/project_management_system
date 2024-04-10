@@ -3,7 +3,7 @@
         <div class="sidebar-content js-simplebar">
             <a
                 class="sidebar-brand"
-                :href="`${$page.props.url}/`"
+                :href="`${$page.props.url}`"
                 style="text-decoration: none"
             >
                 <img
@@ -15,50 +15,56 @@
             </a>
 
             <ul class="sidebar-nav">
-                <li
-                    class="sidebar-item"
-                    :class="
-                        current_url == `${$page.props.url}/` ? 'active' : ''
-                    "
+                <template
+                    v-for="(menu, index) in menuItems"
+                    :key="`menu_item_${index}`"
                 >
-                    <a
-                        :href="`${$page.props.url}/`"
-                        class="sidebar-link"
-                        id="dashboard"
+                    <li
+                        class="sidebar-item"
+                        :class="
+                            current_url == `${$page.props.url}/${menu.url}`
+                                ? 'active'
+                                : ''
+                        "
                     >
-                        <i class="align-middle" data-feather="home"></i>
-                        <span class="align-middle">Dashboard</span>
-                    </a>
-                </li>
-
-                <li
-                    class="sidebar-item"
-                    :class="
-                        current_url == `${$page.props.url}/projects/index`
-                            ? 'active'
-                            : ''
-                    "
-                >
-                    <a
-                        :href="`${$page.props.url}/projects/index`"
-                        class="sidebar-link"
-                        id="projects"
-                    >
-                        <i class="align-middle" data-feather="list"></i>
-                        <span class="align-middle">Projects</span>
-                    </a>
-                </li>
+                        <a
+                            :href="`${$page.props.url}/${menu.url}`"
+                            class="sidebar-link"
+                        >
+                            <i class="align-middle" :class="menu.icon"></i>
+                            <span class="align-middle">{{ menu.name }}</span>
+                        </a>
+                    </li>
+                </template>
             </ul>
         </div>
     </nav>
 </template>
 
 <script setup>
-import { onMounted, ref, onUpdated } from "vue";
+import { onMounted, ref, onUpdated, reactive } from "vue";
+
+let current_url = ref(null);
 
 onMounted(() => {
     current_url.value = window.location.href;
 });
 
-let current_url = ref(null);
+let menuItems = reactive([
+    {
+        name: "Dashboard",
+        icon: "fa fa-home",
+        url: "",
+    },
+    {
+        name: "Projects",
+        icon: "fa fa-list",
+        url: "projects/index",
+    },
+    {
+        name: "Users",
+        icon: "fa fa-users",
+        url: "users/index",
+    },
+]);
 </script>

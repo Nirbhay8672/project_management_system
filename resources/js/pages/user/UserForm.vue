@@ -1,7 +1,7 @@
 <template>
-    <Modal ref="profile_form" :id="'profile_form'">
+    <Modal ref="user_form" :id="'user_form'">
         <template #modal_title>
-            <span>Update Profile</span>
+            <span>{{ title_text }}</span>
         </template>
 
         <form>
@@ -31,7 +31,7 @@
                             @click="trigger"
                             type="button"
                         >
-                            Change Image
+                            Upload Image
                         </button>
                     </div>
                     <input
@@ -145,7 +145,7 @@
                 type="button"
                 @click="handleSubmit"
             >
-                Update
+                {{ button_text }}
             </button>
         </template>
     </Modal>
@@ -165,8 +165,10 @@ import axios from "axios";
 import { userRoutes } from "../../routes/UserRoutes";
 import { toastAlert } from "../../helpers/alert";
 
-let profile_form = ref(null);
+let user_form = ref(null);
 let my_profile = ref("");
+let title_text = ref("");
+let button_text = ref("");
 
 const emits = defineEmits(["reload"]);
 
@@ -184,18 +186,49 @@ let fields = reactive({
 
 function openModal(user) {
     clearFormData();
-    profile_form.value.open();
+    user_form.value.open();
+
+    title_text.value = user ? `Update user : ${user.username}` : "Create User";
+    button_text.value = user ? "Update" : "Submit";
 
     if (user) {
-        fields.id = user.id;
-        fields.profile_path = user.profile_path;
-        fields.profile_image = user.profile_path;
-        fields.username = user.username;
-        fields.email = user.email;
-        fields.first_name = user.first_name;
-        fields.last_name = user.last_name;
-        fields.password = "";
-        fields.confirm_password = "";
+        Object.assign(fields, user);
+        fields.profile_path = `/storage/${user.profile_image.file_path}`;
+
+        formValidation.addFields(fields, {
+            password: {
+                requiredIf: withParamsAndMessage(
+                    withParams([fields, "confirm_password"]),
+                    "Password field is required."
+                ),
+            },
+            confirm_password: {
+                requiredIf: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password field is required."
+                ),
+                same: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password dose not match."
+                ),
+            },
+        });
+    } else {
+        formValidation.addFields(fields, {
+            password: {
+                required: "Password field is required.",
+            },
+            confirm_password: {
+                required: "Confirm password field is required.",
+                same: withParamsAndMessage(
+                    withParams([fields, "password"]),
+                    "Confirm password dose not match."
+                ),
+            },
+            profile_image: {
+                required: "Profile picture is required.",
+            },
+        });
     }
 }
 
@@ -212,6 +245,11 @@ function previewFiles(event) {
 
 function clearFormData() {
     formValidation.reset();
+    title_text.value = "";
+    button_text.value = "";
+    formValidation.reset();
+    formValidation.removeFields("password");
+    formValidation.removeFields("confirm_password");
     resetObjectKeys(fields);
 }
 
@@ -226,7 +264,7 @@ function handleSubmit() {
         form_data.set("profile_image", file, file.name);
     }
 
-    form_data.set("user_id", fields.id);
+    form_data.set("id", fields.id);
     form_data.set("username", fields.username);
     form_data.set("first_name", fields.first_name);
     form_data.set("last_name", fields.last_name);
@@ -238,9 +276,9 @@ function handleSubmit() {
 
     if (formValidation.isValid()) {
         axios
-            .post(userRoutes.updateProfile(fields.id), form_data, settings)
+            .post(userRoutes.createOrUpdate(fields.id), form_data, settings)
             .then((response) => {
-                profile_form.value.close();
+                user_form.value.close();
                 emits("reload", response.data.user_details);
                 toastAlert({ title: response.data.message });
                 clearFormData();
@@ -275,22 +313,6 @@ let formValidation = reactive(
         },
         last_name: {
             required: "Last name field is required.",
-        },
-        password: {
-            requiredIf: withParamsAndMessage(
-                withParams([fields, "confirm_password"]),
-                "Password field is required."
-            ),
-        },
-        confirm_password: {
-            requiredIf: withParamsAndMessage(
-                withParams([fields, "password"]),
-                "Confirm password field is required."
-            ),
-            same: withParamsAndMessage(
-                withParams([fields, "password"]),
-                "Confirm password dose not match."
-            ),
         },
     })
 );

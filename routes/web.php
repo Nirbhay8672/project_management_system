@@ -23,6 +23,14 @@ Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
 
 // projects url
 Route::prefix('projects')->as('projects.')->middleware(['auth'])->group(function () {
-    Route::get('/index', [ProjectController::class, 'index'])->name('project-index');
-    Route::post('/datatable', [ProjectController::class, 'datatable'])->name('project-datatable');
+    Route::get('/index', [ProjectController::class, 'index'])->name('project_index');
+    Route::post('/datatable', [ProjectController::class, 'datatable'])->name('project_datatable');
+});
+
+// users url
+Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
+    Route::get('/index', [UserController::class, 'index'])->name('user_index');
+    Route::post('/datatable', [UserController::class, 'datatable'])->name('user_datatable');
+    Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])
+        ->name('create_or_update');
 });
