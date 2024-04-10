@@ -34,7 +34,7 @@
                         }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end mt-2">
-                        <inertia-link
+                        <a
                             :href="`${$page.props.url}/users/profile`"
                             class="dropdown-item"
                         >
@@ -42,7 +42,7 @@
                                 class="align-middle me-1"
                                 data-feather="user"
                             ></i>
-                            Profile</inertia-link
+                            Profile</a
                         >
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/logout">Log out</a>
@@ -53,16 +53,4 @@
     </nav>
 </template>
 
-<script setup>
-import { onMounted } from "vue";
-
-onMounted(() => {
-    console.log("mount");
-    const e = document.getElementsByClassName("js-sidebar")[0];
-    const t = document.getElementsByClassName("js-sidebar-toggle")[0];
-
-    t.addEventListener("click", () => {
-        e.classList.toggle("collapsed");
-    });
-});
-</script>
+<script setup></script>
