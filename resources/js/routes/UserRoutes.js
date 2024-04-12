@@ -11,6 +11,9 @@ let userRoutes = {
         }
         return `${baseUrl}/users/create-or-update`;
     },
+    deleteUser: (user_id) => {
+        return `${baseUrl}/users/delete/${user_id}`;
+    },
 };
 
 export { userRoutes };

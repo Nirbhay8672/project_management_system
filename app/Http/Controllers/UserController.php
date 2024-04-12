@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserFormRequest;
 use App\Http\Requests\UserProfileFormRequest;
 use App\Http\Services\UserService;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -84,6 +85,7 @@ class UserController extends Controller
 
             if ($search) {
                 $query->where('username', 'like', '%' . $search . '%');
+                $query->orWhere('email', 'like', '%' . $search . '%');
             }
 
             $total = $query->count();
@@ -128,6 +130,28 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->errorResponse(message: $exception->getMessage());
+        }
+    }
+
+    public function delete(User $user): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $roleIdCountInUsers = Project::where('user_id', $user->id)->get()->count();
+
+            if ($roleIdCountInUsers > 0) {
+                return $this->errorResponse(message: "{$user->username} user is in use.", status: 422);
+            }
+
+            $user->delete();
+
+            DB::commit();
+
+            return $this->successResponse(message: "{$user->username} role has been deleted successfully.");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
         }
     }
 }

@@ -33,4 +33,5 @@ Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
     Route::post('/datatable', [UserController::class, 'datatable'])->name('user_datatable');
     Route::post('/create-or-update/{user?}', [UserController::class, 'createOrUpdate'])
         ->name('create_or_update');
+    Route::get('/delete/{user?}', [UserController::class, 'delete'])->name('user_delete');
 });

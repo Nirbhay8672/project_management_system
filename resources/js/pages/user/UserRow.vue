@@ -1,6 +1,7 @@
 <template>
     <tr style="background-color: rgb(248 248 248)">
-        <td>
+        <td style="min-width: 50px">{{ index + 1 }}</td>
+        <td style="min-width: 100px">
             <img
                 :src="`${$page.props.url}/storage/${
                     user.profile_image ? user.profile_image.file_path : ''
@@ -9,22 +10,24 @@
                 alt="profile image"
             />
         </td>
-        <td style="min-width: 50px">{{ index + 1 }}</td>
-        <td style="min-width: 50px">{{ user.username }}</td>
-        <td style="min-width: 50px">
+        <td style="min-width: 200px">{{ user.username }}</td>
+        <td style="min-width: 200px">
             {{ `${user.first_name} ${user.last_name}` }}
         </td>
-        <td style="min-width: 50px">
+        <td style="min-width: 300px">
             {{ user.email }}
         </td>
-        <td style="min-width: 50px" class="text-center">
+        <td style="min-width: 100px" class="text-center">
             <button
                 class="btn btn-outline-primary btn-sm"
                 @click="emits('openEditForm')"
             >
                 <i class="fa fa-pencil"></i>
             </button>
-            <button class="btn btn-outline-danger btn-sm ms-3">
+            <button
+                class="btn btn-outline-danger btn-sm ms-3"
+                @click="emits('deleteUser')"
+            >
                 <i class="fa fa-trash"></i>
             </button>
         </td>
@@ -45,5 +48,5 @@ const props = defineProps({
     },
 });
 
-const emits = defineEmits(["openEditForm"]);
+const emits = defineEmits(["openEditForm", "deleteUser"]);
 </script>

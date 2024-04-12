@@ -94,6 +94,9 @@
                                                     @openEditForm="
                                                         openForm(user)
                                                     "
+                                                    @deleteUser="
+                                                        deleteUser(user)
+                                                    "
                                                 ></user-row>
                                             </template>
                                         </template>
@@ -200,6 +203,7 @@ import UserRow from "./UserRow.vue";
 import axios from "axios";
 import { userRoutes } from "../../routes/UserRoutes";
 import userForm from "./UserForm.vue";
+import { confirmAlert, toastAlert } from "../../helpers/alert";
 
 let users = ref([]);
 let loader = ref(true);
@@ -224,6 +228,31 @@ onMounted(() => {
 
 function openForm(user = null) {
     user_form.value.openModal(user);
+}
+
+function deleteUser(user) {
+    confirmAlert({
+        title: "Delete",
+        icon: "question",
+        html: `Are you sure, you want to delete <strong> ${user.username} </strong> user ?`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios
+                .get(userRoutes.deleteUser(user.id))
+                .then((response) => {
+                    toastAlert({ title: response.data.message });
+                    reloadTable();
+                })
+                .catch(function (error) {
+                    if (error.response.status === 422) {
+                        toastAlert({
+                            title: error.response.data.message,
+                            icon: "error",
+                        });
+                    }
+                });
+        }
+    });
 }
 
 function resetFilter() {
