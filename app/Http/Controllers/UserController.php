@@ -13,12 +13,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('user/Index');
+        $permissions = Permission::select([
+            'id',
+            'name',
+            'display_name',
+            'category',
+        ])->get();
+
+        $grouped_permissions = $permissions->groupBy('category')->toArray();
+
+        return Inertia::render('user/Index', [
+            'permissions' => $grouped_permissions,
+        ]);
     }
 
     public function profile(): Response
@@ -37,7 +49,7 @@ class UserController extends Controller
             'last_name',
         ]);
 
-        return Inertia::render('user/Profile', [
+        return Inertia::render('user/profile/Index', [
             'user_details' => $data,
         ]);
     }

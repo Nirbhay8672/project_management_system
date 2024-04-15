@@ -20,6 +20,7 @@
                                         class="fa fa-pencil fs-5 cursor-pointer"
                                         aria-hidden="true"
                                         @click="openForm()"
+                                        v-if="hasPermission('update_profile')"
                                     ></i>
                                 </div>
                             </div>
@@ -68,9 +69,12 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    auth: {
+        type: Object,
+        required: true,
+    },
 });
 
-let profile_form_element = ref(null);
 let user_data = ref(props.user_details);
 
 function loadProfileData(data) {
@@ -78,6 +82,14 @@ function loadProfileData(data) {
 }
 
 function openForm() {
-    profile_form.value.openModal(props.user_details);
+    profile_form.value.openModal(user_data.value);
+}
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
 }
 </script>

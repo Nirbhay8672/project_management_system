@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use ParentIterator;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -39,7 +40,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth.user' => fn() => $request->user()
-                ? User::with(['profileImage'])->find($request->user()->id)->only('id', 'username', 'profileImage')
+                ? User::with(['profileImage', 'permissions'])->find($request->user()->id)->only('id', 'username', 'profileImage', 'permissions')
                 : null,
             'url' => url('/'),
         ]);

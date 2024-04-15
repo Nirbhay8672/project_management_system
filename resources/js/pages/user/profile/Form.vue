@@ -153,17 +153,17 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import Modal from "../../components/Modal.vue";
+import Modal from "../../../components/Modal.vue";
 import {
     FormValidation,
     withParamsAndMessage,
     withParams,
-} from "../../helpers/Validation";
-import { resetObjectKeys } from "../../helpers/utils";
-import Field from "../../helpers/Field.vue";
+} from "../../../helpers/Validation";
+import { resetObjectKeys } from "../../../helpers/utils";
+import Field from "../../../helpers/Field.vue";
 import axios from "axios";
-import { userRoutes } from "../../routes/UserRoutes";
-import { toastAlert } from "../../helpers/alert";
+import { userRoutes } from "../../../routes/UserRoutes";
+import { toastAlert } from "../../../helpers/alert";
 
 let profile_form = ref(null);
 let my_profile = ref("");

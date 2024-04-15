@@ -21,12 +21,14 @@
             <button
                 class="btn btn-outline-primary btn-sm"
                 @click="emits('openEditForm')"
+                v-if="hasPermission('update_user')"
             >
                 <i class="fa fa-pencil"></i>
             </button>
             <button
                 class="btn btn-outline-danger btn-sm ms-3"
                 @click="emits('deleteUser')"
+                v-if="hasPermission('delete_user')"
             >
                 <i class="fa fa-trash"></i>
             </button>
@@ -46,7 +48,19 @@ const props = defineProps({
         default: 0,
         required: true,
     },
+    auth: {
+        type: Object,
+        required: true,
+    },
 });
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
 
 const emits = defineEmits(["openEditForm", "deleteUser"]);
 </script>

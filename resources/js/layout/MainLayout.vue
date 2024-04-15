@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <custom-sidebar />
+        <custom-sidebar :auth="auth"></custom-sidebar>
 
         <div class="main">
             <slot></slot>
@@ -10,4 +10,15 @@
 
 <script setup>
 import CustomSidebar from "./components/CustomSidebar.vue";
+
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
+});
 </script>

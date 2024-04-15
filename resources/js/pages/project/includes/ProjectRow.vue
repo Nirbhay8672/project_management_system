@@ -15,7 +15,7 @@
         </td>
         <td style="min-width: 50px">
             <img
-                src="../../../../../../images/wordpress.png"
+                src="../../../../../../../images/wordpress.png"
                 class="rounded"
                 style="height: 35px; width: auto"
                 alt="profile image"
@@ -44,7 +44,7 @@
         <td style="min-width: 150px">
             <div>
                 <img
-                    src="../../../../../../images/google.png"
+                    src="../../../../../../../images/google.png"
                     style="height: 15px; width: auto"
                     alt="profile image"
                 />
@@ -78,7 +78,7 @@
         </td>
         <td style="min-width: 150px">
             <img
-                src="../../../../../../images/php.png"
+                src="../../../../../../../images/php.png"
                 style="height: 17px; width: auto"
                 alt="profile image"
             />
@@ -91,7 +91,7 @@
                 class="btn btn-light bg-white border"
             >
                 <img
-                    src="../../../../../../images/wordpress.png"
+                    src="../../../../../../../images/wordpress.png"
                     class="rounded"
                     style="height: 20px; width: auto"
                     alt="wp"

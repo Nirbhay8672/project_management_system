@@ -15,17 +15,16 @@
             </a>
 
             <ul class="sidebar-nav">
-                <template
-                    v-for="(menu, index) in menuItems"
-                    :key="`menu_item_${index}`"
-                >
+                <template v-for="(menu, index) in menuItems">
                     <li
                         class="sidebar-item"
+                        v-if="menu.has_permission"
                         :class="
                             current_url == `${$page.props.url}/${menu.url}`
                                 ? 'active'
                                 : ''
                         "
+                        :key="`menu_item_${index}`"
                     >
                         <a
                             :href="`${$page.props.url}/${menu.url}`"
@@ -42,9 +41,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onUpdated, reactive } from "vue";
+import { onMounted, ref, reactive } from "vue";
 
 let current_url = ref(null);
+
+const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+});
 
 onMounted(() => {
     current_url.value = window.location.href;
@@ -55,16 +61,27 @@ let menuItems = reactive([
         name: "Dashboard",
         icon: "fa fa-home",
         url: "",
+        has_permission: true,
     },
     {
         name: "Projects",
         icon: "fa fa-list",
         url: "projects/index",
+        has_permission: hasPermission("view_user"),
     },
     {
         name: "Users",
         icon: "fa fa-users",
         url: "users/index",
+        has_permission: hasPermission("view_project"),
     },
 ]);
+
+function hasPermission(permission_name) {
+    let permission_obj = props.auth.user.permissions.find(
+        (permission) => permission.name == permission_name
+    );
+
+    return permission_obj ? true : false;
+}
 </script>

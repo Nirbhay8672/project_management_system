@@ -29,9 +29,9 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import Modal from "../../components/Modal.vue";
-import { FormValidation } from "../../helpers/Validation";
-import Field from "../../helpers/Field.vue";
+import Modal from "../../../components/Modal.vue";
+import { FormValidation } from "../../../helpers/Validation";
+import Field from "../../../helpers/Field.vue";
 
 let website_form = ref(null);
 

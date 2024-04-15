@@ -70,11 +70,4 @@
     </main-page>
 </template>
 
-<script setup>
-const props = defineProps({
-    auth: {
-        type: Object,
-        required: true,
-    },
-});
-</script>
+<script setup></script>
