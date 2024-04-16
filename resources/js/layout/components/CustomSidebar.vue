@@ -67,13 +67,13 @@ let menuItems = reactive([
         name: "Projects",
         icon: "fa fa-list",
         url: "projects/index",
-        has_permission: hasPermission("view_user"),
+        has_permission: hasPermission("view_project"),
     },
     {
         name: "Users",
         icon: "fa fa-users",
         url: "users/index",
-        has_permission: hasPermission("view_project"),
+        has_permission: hasPermission("view_user"),
     },
 ]);
 

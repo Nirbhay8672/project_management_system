@@ -17,15 +17,74 @@ class UserSeeder extends Seeder
         Permission::truncate();
         User::truncate();
 
+        $user_ids = [];
+        $user_objects = [];
+
         $admin = User::create([
-            'username' => 'admin',
+            'username' => 'Admin',
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admin@123'),
         ]);
 
-        $this->storeFile([$admin->id]);
+        array_push($user_ids, $admin->id);
+        array_push($user_objects, $admin);
+
+        $user_1 = User::create([
+            'username' => 'Amit',
+            'first_name' => 'Amit',
+            'last_name' => 'Solanki',
+            'email' => 'admit@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        array_push($user_ids, $user_1->id);
+        array_push($user_objects, $user_1);
+
+        $user_2 = User::create([
+            'username' => 'Bharat',
+            'first_name' => 'Bharat',
+            'last_name' => 'Makwana',
+            'email' => 'bharat@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        array_push($user_ids, $user_2->id);
+        array_push($user_objects, $user_2);
+
+        $user_3 = User::create([
+            'username' => 'Rushil',
+            'first_name' => 'Rushil',
+            'last_name' => 'Pipaliya',
+            'email' => 'rishi@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        array_push($user_ids, $user_3->id);
+        array_push($user_objects, $user_3);
+
+        $user_4 = User::create([
+            'username' => 'Dilip',
+            'first_name' => 'Dilip',
+            'last_name' => 'Vadher',
+            'email' => 'dilip@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        array_push($user_ids, $user_4->id);
+        array_push($user_objects, $user_4);
+
+        $user_5 = User::create([
+            'username' => 'Raj',
+            'first_name' => 'Raj',
+            'last_name' => 'Soni',
+            'email' => 'raj@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        array_push($user_ids, $user_5->id);
+        array_push($user_objects, $user_5);
 
         $permissions = [
 
@@ -51,11 +110,15 @@ class UserSeeder extends Seeder
                     'category' => $permission['category'],
                 ]);
 
-                $admin->givePermissionTo($permission_obj);
+                foreach ($user_objects as $user_object) {
+                    $user_object->givePermissionTo($permission_obj);
+                }
             }
         } else {
             dd('permissions table is not exists.');
         }
+
+        $this->storeFile($user_ids);
     }
 
     public function storeFile($user_ids)
@@ -66,7 +129,7 @@ class UserSeeder extends Seeder
         $file = null;
 
         foreach ($files as $value) {
-            if ($value->getFilename() === 'user.png') {
+            if ($value->getFilename() === 'profile.png') {
                 $file = $value;
             }
         }

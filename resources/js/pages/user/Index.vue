@@ -107,6 +107,7 @@
                                                     @deleteUser="
                                                         deleteUser(user)
                                                     "
+                                                    @openView="openView(user)"
                                                     :auth="auth"
                                                 ></user-row>
                                             </template>
@@ -185,8 +186,12 @@
         <teleport to="body">
             <user-form
                 ref="user_form"
-                :permissions="permissions"
+                :grouped_permissions="grouped_permissions"
                 @reload="reloadTable"
+            />
+            <user-view
+                ref="user_view"
+                :grouped_permissions="grouped_permissions"
             />
         </teleport>
     </main-page>
@@ -198,20 +203,22 @@ import UserRow from "./includes/UserRow.vue";
 import axios from "axios";
 import { userRoutes } from "../../routes/UserRoutes";
 import userForm from "./includes/Form.vue";
+import userView from "./includes/View.vue";
 import { confirmAlert, toastAlert } from "../../helpers/alert";
 
 let users = ref([]);
 let loader = ref(true);
 
 let user_form = ref(null);
+let user_view = ref(null);
 
 const props = defineProps({
     auth: {
         type: Object,
         required: true,
     },
-    permissions: {
-        type: Array,
+    grouped_permissions: {
+        type: Object,
         required: true,
     },
 });
@@ -234,6 +241,10 @@ onMounted(() => {
 
 function openForm(user = null) {
     user_form.value.openModal(user);
+}
+
+function openView(user = null) {
+    user_view.value.openModal(user);
 }
 
 function deleteUser(user) {
@@ -259,14 +270,6 @@ function deleteUser(user) {
                 });
         }
     });
-}
-
-function resetFilter() {
-    fields.search = "";
-    fields.filter = "latest";
-    fields.per_page = 10;
-    fields.page = 1;
-    reloadTable();
 }
 
 function chnageMainFilter() {

@@ -1,6 +1,6 @@
 <template>
     <tr style="background-color: rgb(248 248 248)">
-        <td style="min-width: 50px">{{ index + 1 }}</td>
+        <td style="min-width: 100px">{{ index + 1 }}</td>
         <td style="min-width: 100px">
             <img
                 :src="`${$page.props.url}/storage/${
@@ -17,9 +17,16 @@
         <td style="min-width: 300px">
             {{ user.email }}
         </td>
-        <td style="min-width: 100px" class="text-center">
+        <td style="min-width: 200px" class="text-center">
             <button
-                class="btn btn-outline-primary btn-sm"
+                class="btn btn-outline-info btn-sm"
+                @click="emits('openView')"
+                v-if="hasPermission('user_info')"
+            >
+                <i class="fa fa-eye"></i>
+            </button>
+            <button
+                class="btn btn-outline-primary btn-sm ms-3"
                 @click="emits('openEditForm')"
                 v-if="hasPermission('update_user')"
             >
@@ -62,5 +69,5 @@ function hasPermission(permission_name) {
     return permission_obj ? true : false;
 }
 
-const emits = defineEmits(["openEditForm", "deleteUser"]);
+const emits = defineEmits(["openEditForm", "deleteUser", "openView"]);
 </script>

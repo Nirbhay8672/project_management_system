@@ -29,7 +29,7 @@ class UserController extends Controller
         $grouped_permissions = $permissions->groupBy('category')->toArray();
 
         return Inertia::render('user/Index', [
-            'permissions' => $grouped_permissions,
+            'grouped_permissions' => $grouped_permissions,
         ]);
     }
 
@@ -93,7 +93,7 @@ class UserController extends Controller
 
             $query = User::query();
 
-            $query->with(['profileImage']);
+            $query->with(['profileImage', 'permissions']);
 
             if ($search) {
                 $query->where('username', 'like', '%' . $search . '%');
@@ -134,6 +134,11 @@ class UserController extends Controller
 
             if ($request->profile_image) {
                 $userService->storeProfileImage($request->profile_image, $user);
+            }
+
+            if ($request->permissions !== '') {
+                $permission_array = explode(",", $request->permissions);
+                $user->syncPermissions($permission_array);
             }
 
             DB::commit();

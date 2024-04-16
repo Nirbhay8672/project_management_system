@@ -1,5 +1,5 @@
 <template>
-    <Modal ref="user_form" :id="'user_form'">
+    <Modal ref="user_form" :id="'user_form'" :size="'large'">
         <template #modal_title>
             <span>{{ title_text }}</span>
         </template>
@@ -139,6 +139,51 @@
             </div>
         </form>
 
+        <div class="row mt-4">
+            <div class="col">
+                <h5 class="text-center">Permissions</h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <template
+                v-for="(permissions, category) in grouped_permissions"
+                :key="`permission_group_${category}`"
+            >
+                <div class="col-12">
+                    <div
+                        class="bg-light p-2 text-center mt-3"
+                        style="border: 1px solid black; border-radius: 5px"
+                    >
+                        <strong>{{ category }}</strong>
+                    </div>
+                    <div class="row gy-2 mt-2">
+                        <div
+                            v-for="(permission, index) in permissions"
+                            :key="`permission_${index}`"
+                            class="col-12 col-lg-6 col-md-6"
+                        >
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    :value="permission.name"
+                                    v-model="permissions_array"
+                                    :id="`${category}_permission_${index}`"
+                                />
+                                <label
+                                    class="form-check-label"
+                                    :for="`${category}_permission_${index}`"
+                                >
+                                    {{ permission.display_name }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
         <template #modal_footer>
             <button
                 class="btn btn-success btn-sm"
@@ -173,11 +218,13 @@ let button_text = ref("");
 const emits = defineEmits(["reload"]);
 
 const props = defineProps({
-    permissions: {
-        type: Array,
+    grouped_permissions: {
+        type: Object,
         required: true,
     },
 });
+
+let permissions_array = ref([]);
 
 let fields = reactive({
     id: "",
@@ -201,6 +248,10 @@ function openModal(user) {
     if (user) {
         Object.assign(fields, user);
         fields.profile_path = `/storage/${user.profile_image.file_path}`;
+
+        user.permissions.forEach((permission) => {
+            permissions_array.value.push(permission.name);
+        });
 
         formValidation.addFields(fields, {
             password: {
@@ -254,6 +305,7 @@ function clearFormData() {
     formValidation.reset();
     title_text.value = "";
     button_text.value = "";
+    permissions_array.value = [];
     formValidation.reset();
     formValidation.removeFields("password");
     formValidation.removeFields("confirm_password");
@@ -278,6 +330,7 @@ function handleSubmit() {
     form_data.set("email", fields.email);
     form_data.set("password", fields.password);
     form_data.set("confirm_password", fields.confirm_password);
+    form_data.set("permissions", permissions_array.value);
 
     let settings = { headers: { "content-type": "multipart/form-data" } };
 
