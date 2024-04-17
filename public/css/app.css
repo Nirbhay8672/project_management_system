@@ -146,7 +146,7 @@ body {
 
 .login-page-container {
     background-image: url('../images/guest-bg.png');
-    background-position: center;
+    background-size: cover;
 }
 
 .alert-danger {
