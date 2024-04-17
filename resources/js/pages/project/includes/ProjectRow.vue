@@ -15,7 +15,7 @@
         </td>
         <td style="min-width: 50px">
             <img
-                src="../../../../../../../images/wordpress.png"
+                :src="`/storage/${project.project_logo_path}`"
                 class="rounded"
                 style="height: 35px; width: auto"
                 alt="profile image"

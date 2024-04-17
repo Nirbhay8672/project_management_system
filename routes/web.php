@@ -25,7 +25,6 @@ Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
 Route::prefix('projects')->as('projects.')->middleware(['auth'])->group(function () {
     Route::get('/index', [ProjectController::class, 'index'])->name('project_index');
     Route::post('/datatable', [ProjectController::class, 'datatable'])->name('project_datatable');
-    Route::post('/add-website', [ProjectController::class, 'addWebsite'])->name('add_website');
 });
 
 // users url
@@ -36,3 +35,5 @@ Route::prefix('users')->as('users.')->middleware(['auth'])->group(function () {
         ->name('create_or_update');
     Route::get('/delete/{user?}', [UserController::class, 'delete'])->name('user_delete');
 });
+
+Route::post('/add-website', [ProjectController::class, 'addWebsite'])->name('add_website');
