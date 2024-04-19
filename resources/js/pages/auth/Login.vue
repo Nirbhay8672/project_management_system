@@ -100,6 +100,15 @@
                                         Sign in
                                     </button>
                                 </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <a
+                                        class="btn btn-lg btn-danger"
+                                        :href="`${$page.props.url}/auth/google`"
+                                    >
+                                        Login With Google
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     </div>

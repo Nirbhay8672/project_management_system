@@ -10,6 +10,9 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/post-login', [LoginController::class, 'postLogin']);
 Route::get('/logout', [LoginController::class, 'logOut']);
 
+Route::get('auth/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
 // user urls
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
