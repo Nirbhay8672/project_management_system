@@ -6,7 +6,11 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
     >
-        <div class="modal-dialog" :class="modalSize" :style="customeStyle">
+        <div
+            class="modal-dialog animate__animated animate__slideInDown"
+            :class="modalSize"
+            :style="customeStyle"
+        >
             <div class="modal-content" style="border-radius: 10px !important">
                 <div class="modal-header" :class="headerClass">
                     <h5 class="modal-title">

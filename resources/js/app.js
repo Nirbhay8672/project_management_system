@@ -4,6 +4,8 @@ import { createInertiaApp, Link, Head } from "@inertiajs/vue3";
 import MainLayout from "./layout/MainLayout.vue";
 import MainPage from "./layout/Page.vue";
 
+import "animate.css";
+
 createInertiaApp({
     id: "app",
     title: (title) => (title ? `${title} | PMS` : "PMS"),

@@ -14,7 +14,8 @@
         "@caneara/iodine": "^8.5.0",
         "@inertiajs/vue3": "^1.0.15",
         "@vitejs/plugin-vue": "^5.0.4",
-        "sweetalert2": "^11.10.7",
+        "animate.css": "^4.1.1",
+        "sweetalert2": "^11.6.13",
         "vue": "^3.4.21",
         "vue-loader": "^17.4.2"
     }
